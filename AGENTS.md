@@ -1,41 +1,31 @@
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+# Instruções para trabalhar no MoveUp Connect
 
-## Expo has changed — do not trust your training data
+O MoveUp Connect é uma PAP do Curso Profissional de Técnico de Programação Informática (2026/2027), em colaboração com o MoveUp Fitness Action, em Pombal, Portugal. O projeto inclui website institucional em React, aplicação móvel e área de administração. Este repositório contém a aplicação móvel Android e iOS. O objetivo é que os clientes passem menos tempo ao telemóvel enquanto ocupam uma máquina. Privilegia fluxos curtos para consultar planos e exercícios, registar resultados e acompanhar a evolução.
 
-Expo ships breaking changes every SDK release. APIs you remember are likely renamed, moved, or removed. Before writing any code that touches an Expo, EAS, or React Native API:
+## Stack e documentação Expo
 
-1. Read the major version of the `expo` package in `package.json`.
-2. Fetch the matching versioned docs: `https://docs.expo.dev/versions/v<major>.0.0/`
-3. For anything else, fetch https://docs.expo.dev/llms.txt — an index of all Expo docs with corrections to common LLM misconceptions. Follow its links to the specific page you need; never answer from memory.
+Usa React Native, Expo, TypeScript estrito, Expo Router e Hermes. A evolução prevê Firebase Authentication, Cloud Firestore, Firebase Storage, SQLite, Expo Notifications e EAS Build. Usa Git e GitHub para controlo de versões. A distribuição final é nativa e independente do Expo Go. Adiciona dependências quando a funcionalidade as exigir e dá preferência aos módulos recomendados pelo Expo.
 
-## Commands
+Antes de alterar código que usa Expo, EAS ou React Native:
 
-Use `bunx` instead of `npx` if the project uses bun (`bun.lock` present).
+1. Confirma a versão principal de `expo` em `package.json`.
+2. Consulta `https://docs.expo.dev/versions/v<major>.0.0/`.
+3. Consulta o [índice Expo](https://docs.expo.dev/llms.txt) e segue a ligação para a referência da API em causa. Confirma o comportamento na versão instalada.
 
-```bash
-npx expo install <package>  # ALWAYS use instead of npm/yarn/pnpm/bun add — resolves SDK-compatible versions
-npx expo start              # start the dev server
-npx expo lint               # lint
-npx tsc --noEmit            # typecheck
-npx expo-doctor             # diagnose dependency and config issues
-npx expo install --fix      # fix incompatible package versions
-```
+Instala dependências com `npx expo install <pacote>`. O repositório usa npm e mantém `package-lock.json`. Usa `bunx` em vez de `npx` se o projeto passar a usar Bun e tiver `bun.lock`. Consulta o [Expo Router](https://docs.expo.dev/router/introduction.md) e o [EAS](https://docs.expo.dev/eas/index.md). Usa `npx eas-cli@latest` para os comandos EAS. Os projetos nativos são gerados por Continuous Native Generation. Faz alterações em `app.json` ou config plugins. Usa uma compilação de desenvolvimento quando uma alteração exigir módulos nativos ausentes do Expo Go.
 
-Run lint and typecheck before declaring any task done.
+## Arquitetura e qualidade
 
-## Navigation & Routing
+- Coloca rotas e layouts em `src/app/` e mantém a lógica de negócio nos módulos em `src/features/` quando forem necessários. Importa `Link`, `router` e `useLocalSearchParams` de `expo-router`.
+- Reutiliza componentes quando houver casos concretos. Separa interface, dados fictícios e lógica. Cria adaptadores de dados e migrações com os primeiros fluxos que os usarem.
+- Escreve código e identificadores em inglês. Usa português de Portugal na interface e documentação. Prefere tipos explícitos nos limites do sistema e evita `any` sem justificação. Trata erros com mensagens acionáveis e sem dados pessoais.
+- Usa padrões nativos, áreas seguras, contraste, texto escalável, leitores de ecrã e zonas de toque adequadas. Confirma Android e iOS e usa recursos visuais oficiais apenas após autorização.
+- Prioriza o funcionamento offline das tarefas de treino, a cache por conta, a sincronização idempotente e o carregamento progressivo. Reduz animações, renderizações, pedidos de rede e ficheiros pesados. Mede o desempenho em dispositivos de referência, incluindo Android de baixo desempenho. Considera cerca de dois segundos para a abertura e 60 FPS como metas, preservando a segurança e a estabilidade.
 
-- Use **Expo Router** for all navigation. Routes live in `src/app/` — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside `src/app/`.
-- Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
-- Docs: https://docs.expo.dev/router/introduction.md
+## Dados e segurança
 
-## Building with EAS
+Usa dados fictícios e projetos de teste autorizados. Nunca ligues a sistemas reais sem autorização nem incluas dados pessoais reais, segredos, tokens, chaves privadas, certificados ou contas de serviço no Git ou no bundle. Usa `EXPO_PUBLIC_*` apenas para configuração pública do cliente. Aplica menor privilégio, regras Firestore e Storage que isolem contas e testes de acessos negados. Mantém a cache local isolada por utilizador. Antes de tratar dados reais, confirma os requisitos com o ginásio e segue o [guia de segurança](docs/security.md).
 
-Use EAS to build, sign, and submit the app in the cloud (`eas build`, `eas submit`) and to ship over-the-air updates (`eas update`) — no local Xcode or Android Studio required. Run EAS CLI as `bunx eas-cli <command>` in Bun projects, or `npx eas-cli@latest <command>` otherwise; substitute that for bare `eas` in docs examples.
-Docs: https://docs.expo.dev/eas/index.md
+## Validação
 
-## Rules
-
-- If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
-- Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
-- Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+Corre `npm ci`, `npm run lint`, `npm run typecheck`, `npm test --if-present` e `npx expo-doctor`. Se o SDK assinalar versões incompatíveis, revê o diagnóstico e usa `npx expo install --fix` quando adequado. Confirma os imports, a navegação e os recursos referenciados. Valida Android e iOS de acordo com a alteração e declara o que ficou por testar em dispositivos reais. Revê `git diff` e `git status`. Preserva o histórico e os conteúdos relevantes, e deixa o push para aprovação explícita.

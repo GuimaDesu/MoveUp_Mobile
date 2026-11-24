@@ -1,57 +1,43 @@
-# Welcome to your Expo app 👋
+# MoveUp Connect · Aplicação móvel
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+![Expo SDK](https://img.shields.io/badge/Expo-SDK%2058-000020)
+![Plataformas](https://img.shields.io/badge/Plataformas-Android%20%2F%20iOS-475569)
 
-## Get started
+O MoveUp Connect é um projeto da Prova de Aptidão Profissional (PAP) do Curso Profissional de Técnico de Programação Informática, no ano letivo 2026/2027, em colaboração com o ginásio MoveUp Fitness Action, em Pombal, Portugal. O projeto inclui um website institucional em React, uma aplicação móvel e uma área de administração e gestão. Este repositório contém a aplicação móvel.
 
-1. Install dependencies
+O responsável do ginásio identificou que os clientes passam demasiado tempo ao telemóvel enquanto ocupam as máquinas. A aplicação pretende reduzir esse tempo, tornando mais rápida a consulta de planos e exercícios, o registo de resultados e o acompanhamento da evolução.
 
-   ```bash
-   npm install
-   ```
+## Estado atual
 
-2. Start the app
+A versão de desenvolvimento **0.1.0** apresenta um ecrã provisório com a identificação MoveUp Connect. Utiliza React Native, Expo SDK 58, TypeScript em modo estrito, Expo Router e Hermes no ambiente nativo. O Git e o GitHub suportam o controlo de versões e a colaboração. As funcionalidades de treino, a ligação ao Firebase e as compilações de distribuição estão previstas para fases posteriores.
 
-   ```bash
-   npx expo start
-   ```
+## Instalação e execução
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+É necessário ter Git, Node.js 22 LTS (22.13 ou superior nessa linha), npm e, para testar num telemóvel, uma versão do Expo Go compatível com o SDK 58.
 
 ```bash
-npm run reset-project
+git clone https://github.com/GuimaDesu/MoveUp_Mobile.git
+cd MoveUp_Mobile
+npm ci
+npm start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Liga o telemóvel e o computador à mesma rede local e lê o código QR com o Expo Go no Android ou com a Câmara no iOS. Se a rede local impedir a ligação, usa `npm start -- --tunnel` com acesso à Internet. O [guia de desenvolvimento](docs/development.md) inclui emuladores, simuladores e o processo previsto de compilação.
 
-### Other setup steps
+As compilações independentes de Android e iOS serão feitas com EAS Build após aprovação dos identificadores, da conta e da assinatura. A versão final será instalável sem Expo Go.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Arquitetura e próximos marcos
 
-## Learn more
+- `src/app/` contém as rotas e o layout do Expo Router. Os módulos de negócio serão adicionados à medida que as funcionalidades forem desenvolvidas.
+- `docs/` descreve a [arquitetura](docs/architecture.md), o [desenvolvimento](docs/development.md), os [testes](docs/testing.md), a [segurança](docs/security.md) e o [roadmap](docs/roadmap.md).
+- `.github/` contém a validação automática e os modelos de colaboração.
 
-To learn more about developing your project with Expo, look at the following resources:
+A primeira entrega funcional prevê autenticação, recuperação de palavra-passe, perfil e painel personalizado, seguidos dos planos atribuídos, biblioteca de exercícios e demonstrações. O registo de séries, repetições e cargas, temporizador, histórico e evolução completam o fluxo de treino. O roadmap inclui consulta e registo offline com SQLite, sincronização automática, informação sobre serviços do ginásio e notificações com Expo Notifications. A integração remota prevê Firebase Authentication, Cloud Firestore e Firebase Storage.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Segurança e contribuição
 
-## Join the community
+O desenvolvimento usa dados fictícios. A integração com sistemas reais depende de autorização e de regras de acesso que isolem os dados de cada cliente. O [guia de segurança](docs/security.md) descreve os controlos previstos, incluindo proteção de dados pessoais. Consulta o [guia de contribuição](CONTRIBUTING.md) antes de abrir um pull request e a [política de segurança](SECURITY.md) para comunicar vulnerabilidades.
 
-Join our community of developers creating universal apps.
+## Créditos
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-"# MoveUp_Mobile" 
+Projeto desenvolvido no âmbito da PAP do Curso Profissional de Técnico de Programação Informática, em colaboração com o MoveUp Fitness Action, em Pombal, Portugal.
